@@ -11,12 +11,15 @@ class Startseite(StartseiteTemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
 
+    self.data_grid_1.columns = [
+      { "id": "A", "title": "Zimmer ID", "data_key": "zimmerid" },
+      { "id": "B", "title": "Bettenanzahl", "data_key": "bettenanzahl" },
+      { "id": "C", "title": "Preis pro Nacht", "data_key": "preis" }
+    ]
     # Any code you write here will run before the form opens.
     data = anvil.server.call("get_jugendherbergen", "name, JID")
     self.drop_down_1.items = data
 
-    data = anvil.server.call("get_zimmer_for_jugendherberge", 1)
-    print(data)
     # item_list = []
     # for x in data:
     #   list = [x[1], x[0]]
@@ -26,6 +29,9 @@ class Startseite(StartseiteTemplate):
   def drop_down_1_change(self, **event_args):
     """This method is called when an item is selected"""
     jid = self.drop_down_1.items[self.drop_down_1.selected_value - 1][1]
-    self.data_grid_1.columns()
+    data = anvil.server.call("get_zimmer_for_jugendherberge", jid, "ZID, bettenanzahl, preis_pro_nacht")
+    row = DataRowPanel()
+    row.item = data
+    self.data_grid_1.add_component(row)
     
     
