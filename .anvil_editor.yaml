@@ -4,6 +4,9 @@ unique_ids:
     theme.css: HHRJEVUHG3RP4HQWG6KHMOPIURHK45WP
   forms:
     Startseite: UZWCHHS5AFP4XQ2OD4MIGUV6XPGCP6NQ
+    Startseite.ItemTemplate1: '1729073470774564814581305.7802'
+    Startseite.RowTemplate1: '1729072976735291352180942.8776'
+    Startseite.RowTemplate2: '1729073537179723757016776.2329'
   modules: {}
   scripts: {}
   server_modules:

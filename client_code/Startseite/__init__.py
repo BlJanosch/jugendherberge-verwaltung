@@ -12,10 +12,20 @@ class Startseite(StartseiteTemplate):
     self.init_components(**properties)
 
     # Any code you write here will run before the form opens.
-    data = anvil.server.call("get_jugendherbgergen", "name, JID")
+    data = anvil.server.call("get_jugendherbergen", "name, JID")
     self.drop_down_1.items = data
+
+    data = anvil.server.call("get_zimmer_for_jugendherberge", 1)
+    print(data)
     # item_list = []
     # for x in data:
     #   list = [x[1], x[0]]
     #   item_list.append(list)
     # self.drop_down_1.items = item_list
+
+  def drop_down_1_change(self, **event_args):
+    """This method is called when an item is selected"""
+    jid = self.drop_down_1.items[self.drop_down_1.selected_value - 1][1]
+    self.data_grid_1.columns()
+    
+    

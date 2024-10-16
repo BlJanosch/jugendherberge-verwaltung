@@ -14,13 +14,21 @@ import sqlite3
 # Here is an example - you can replace it with your own:
 #
 @anvil.server.callable
-def get_jugendherbgergen(rows="*"):
+def get_jugendherbergen(rows="*"):
     conn = sqlite3.connect(data_files['jugendherbergen_verwaltung.db'])
     cursor = conn.cursor()
     res = list(cursor.execute(f"SELECT {rows} FROM jugendherbergen"))
     # Premium Lösung: SELECT name, LID FROM jugendherbergen
+    conn.close()
     return res
-  
+
+@anvil.server.callable
+def get_zimmer_for_jugendherberge(jid, rows="*"):
+    conn = sqlite3.connect(data_files['jugendherbergen_verwaltung.db'])
+    cursor = conn.cursor()
+    res = list(cursor.execute(f"SELECT {rows} FROM zimmer WHERE JID = {jid}"))
+    conn.close()
+    return res
 
 
 
