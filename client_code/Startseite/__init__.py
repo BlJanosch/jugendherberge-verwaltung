@@ -10,28 +10,36 @@ class Startseite(StartseiteTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
-
-    self.data_grid_1.columns = [
-      { "id": "A", "title": "Zimmer ID", "data_key": "zimmerid" },
-      { "id": "B", "title": "Bettenanzahl", "data_key": "bettenanzahl" },
-      { "id": "C", "title": "Preis pro Nacht", "data_key": "preis" }
-    ]
+    
     # Any code you write here will run before the form opens.
     data = anvil.server.call("get_jugendherbergen", "name, JID")
     self.drop_down_1.items = data
 
-    # item_list = []
-    # for x in data:
-    #   list = [x[1], x[0]]
-    #   item_list.append(list)
-    # self.drop_down_1.items = item_list
-
-  def drop_down_1_change(self, **event_args):
-    """This method is called when an item is selected"""
-    jid = self.drop_down_1.items[self.drop_down_1.selected_value - 1][1]
-    data = anvil.server.call("get_zimmer_for_jugendherberge", jid, "ZID, bettenanzahl, preis_pro_nacht")
-    row = DataRowPanel()
-    row.item = data
-    self.data_grid_1.add_component(row)
+    self.LoadZimmerData()
+    self.LoadGaeste()
     
+
+  def LoadZimmerData(self):
+    jid = self.drop_down_1.items[self.drop_down_1.selected_value - 1][1]
+    data = anvil.server.call("get_zimmer_for_jugendherberge", jid, "zimmernummer, bettenanzahl, preis_pro_nacht, gebucht")
+    listfordata = []
+    ZimmerNumber = []
+    for item in data:
+      toAdd = {'zimmerid': item[0], 'bettenanzahl': item[1], 'preis': item[2], 'status': "nicht gebucht" if item[3] == 0 else "gebucht"}
+      listfordata.append(toAdd)
+      if (item[3] == 0):
+        ZimmerNumber.append(str(item[0]))
+    self.repeating_panel_1.items = listfordata
+    self.drop_down_2.items = ZimmerNumber
+    
+  def drop_down_1_change(self, **event_args):
+    self.LoadZimmerData()
+    
+  def LoadGaeste(self):
+    gäste = anvil.server.call("get_gast_for_jugendherberge")
+    self.check_box_1.text = f"{gäste[0][2]} {gäste[0][3]}"
+    self.check_box_2.text = f"{gäste[1][2]} {gäste[1][3]}"
+    self.check_box_3.text = f"{gäste[2][2]} {gäste[2][3]}"
+  
+  
     

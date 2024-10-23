@@ -30,6 +30,14 @@ def get_zimmer_for_jugendherberge(jid, rows="*"):
     conn.close()
     return res
 
+@anvil.server.callable
+def get_gast_for_jugendherberge(rows="*"):
+    conn = sqlite3.connect(data_files['jugendherbergen_verwaltung.db'])
+    cursor = conn.cursor()
+    res = list(cursor.execute(f"SELECT {rows} FROM gast"))
+    conn.close()
+    return res
+
 
 
 

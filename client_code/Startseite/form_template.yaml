@@ -6,17 +6,51 @@ components:
     properties: {}
     type: DropDown
   - components:
-    - name: repeating_panel_1
-      properties: {item_template: Startseite.RowTemplate2}
+    - data_bindings: []
+      name: repeating_panel_1
+      properties: {item_template: Startseite.RowTemplate3}
       type: RepeatingPanel
-    layout_properties: {grid_position: 'NXDAAC,UIFRBN'}
+    layout_properties: {grid_position: 'JUKVPS,QYTURQ'}
     name: data_grid_1
     properties:
       columns:
-      - {data_key: column_1, id: JKSDUP, title: Column 1}
-      - {data_key: column_2, id: VJQQOR, title: Column 2}
-      - {data_key: column_3, id: OJLQEN, title: Column 3}
+      - {data_key: zimmerid, id: JKSDUP, title: Zimmer Nr.}
+      - {data_key: bettenanzahl, id: VJQQOR, title: Bettenanzahl}
+      - {data_key: preis, id: OJLQEN, title: Preis pro Nacht}
+      - {data_key: status, id: EMBRHB, title: Status}
     type: DataGrid
+  - layout_properties: {grid_position: 'VFAXLM,JMJWHM'}
+    name: label_2
+    properties: {bold: true, text: 'Zimmer auswählen:'}
+    type: Label
+  - layout_properties: {grid_position: 'ZGRIAU,XPCWZL'}
+    name: drop_down_2
+    properties: {}
+    type: DropDown
+  - layout_properties: {grid_position: 'GHDWBM,MBZHFB'}
+    name: label_3
+    properties: {bold: true, italic: false, text: Zusätzliche Gäste}
+    type: Label
+  - layout_properties: {grid_position: 'SUFLKQ,JNYAXD'}
+    name: check_box_1
+    properties: {text: check_box_1}
+    type: CheckBox
+  - layout_properties: {grid_position: 'MFEIUU,MGYGXQ'}
+    name: check_box_2
+    properties: {text: check_box_2}
+    type: CheckBox
+  - layout_properties: {grid_position: 'RHYWHY,EPNFEU'}
+    name: check_box_3
+    properties: {text: check_box_3}
+    type: CheckBox
+  - layout_properties: {grid_position: 'HZBDGR,MDIJKX'}
+    name: label_4
+    properties: {bold: true, text: 'Zeitraum auswählen:'}
+    type: Label
+  - layout_properties: {grid_position: 'MATAQP,YAVXOW'}
+    name: date_picker_1
+    properties: {}
+    type: DatePicker
   layout_properties: {slot: default}
   name: content_panel
   properties: {col_widths: '{}'}
