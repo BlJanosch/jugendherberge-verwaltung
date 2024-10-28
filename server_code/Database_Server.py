@@ -47,10 +47,10 @@ def set_buchmit_for_jugendherberge(bid, gid):
     conn.close()
 
 @anvil.server.callable
-def set_bucht_for_jugendherberge(gid, zid, datum):
+def set_bucht_for_jugendherberge(gid, zid, startdatum, enddatum):
     conn = sqlite3.connect(data_files['jugendherbergen_verwaltung.db'])
     cursor = conn.cursor()
-    cursor.execute(f"INSERT INTO bucht (GID, ZID, Datum) VALUES ({gid}, {zid}, '{datum}')")
+    cursor.execute(f"INSERT INTO bucht (GID, ZID, StartDatum, EndDatum) VALUES ({gid}, {zid}, '{startdatum}', '{enddatum}')")
     conn.commit()
     conn.close()
 
@@ -63,10 +63,10 @@ def get_zimmerid(zimmernummer):
     return res[0]
 
 @anvil.server.callable
-def get_bid(zid, datum):
+def get_bid(zid, startdatum, enddatum):
     conn = sqlite3.connect(data_files['jugendherbergen_verwaltung.db'])
     cursor = conn.cursor()
-    res = cursor.execute(f"SELECT BID FROM bucht WHERE ZID={zid} AND Datum='{datum}'").fetchone()
+    res = cursor.execute(f"SELECT BID FROM bucht WHERE ZID={zid} AND StartDatum='{startdatum}' AND EndDatum='{enddatum}'").fetchone()
     conn.close()
     return res[0]
 
