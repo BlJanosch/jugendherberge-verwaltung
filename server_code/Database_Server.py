@@ -102,4 +102,12 @@ def getdata2():
     conn.close()
     return res
 
+@anvil.server.callable
+def get_start_end_datum(zid):
+    conn = sqlite3.connect(data_files['jugendherbergen_verwaltung.db'])
+    cursor = conn.cursor()
+    res = list(cursor.execute(f"SELECT StartDatum, Enddatum FROM bucht WHERE ZID={zid}"))
+    conn.close()
+    return res
+
 

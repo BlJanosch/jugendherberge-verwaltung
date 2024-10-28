@@ -27,7 +27,12 @@ class Startseite(StartseiteTemplate):
     listfordata = []
     ZimmerNumber = []
     for item in data:
-      toAdd = {'zimmerid': item[0], 'bettenanzahl': item[1], 'preis': item[2], 'status': "nicht gebucht" if item[3] == 0 else "gebucht"}
+      Startdatum, Enddatum = "-", "-"
+      try:
+        Startdatum, Enddatum = anvil.server.call("get_start_end_datum", anvil.server.call("get_zimmerid", item[0]))[0]
+      except:
+        pass
+      toAdd = {'zimmerid': item[0], 'bettenanzahl': item[1], 'preis': item[2], 'status': "nicht gebucht" if item[3] == 0 else "gebucht", 'startdatum': Startdatum, 'enddatum': Enddatum}
       listfordata.append(toAdd)
       if (item[3] == 0):
         ZimmerNumber.append(str(item[0]))
@@ -92,9 +97,6 @@ class Startseite(StartseiteTemplate):
       return False
     if (self.date_picker_1.date > self.date_picker_2.date):
       alert("Startdatum darf nicht nach dem Enddatum sein", title="Error", large=True)
-      return False
-    if (self.date_picker_2.date < self.date_picker_1.date):
-      alert("Enddatum darf nicht vor dem Startdatum sein", title="Error", large=True)
       return False
     return True
     

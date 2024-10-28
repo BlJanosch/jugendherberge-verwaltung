@@ -18,6 +18,8 @@ components:
       - {data_key: bettenanzahl, id: VJQQOR, title: Bettenanzahl}
       - {data_key: preis, id: OJLQEN, title: Preis pro Nacht}
       - {data_key: status, id: EMBRHB, title: Status}
+      - {data_key: startdatum, id: OURWJZ, title: Von}
+      - {data_key: enddatum, id: OJBAEO, title: Bis}
     type: DataGrid
   - layout_properties: {grid_position: 'VFAXLM,JMJWHM'}
     name: label_2
