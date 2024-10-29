@@ -59,10 +59,6 @@ class Startseite(StartseiteTemplate):
         StartDatum = OldStartDatum.replace("-", ".")
         OldEndDatum = str(self.date_picker_2.date)
         EndDatum = OldEndDatum.replace("-", ".")
-      anvil.server.call("set_bucht_for_jugendherberge", 10, ZID, StartDatum, EndDatum)
-      anvil.server.call('update_zimmer', ZID)
-      # Befüllen der Tabelle buchtmit mit den Daten
-      BID = anvil.server.call("get_bid", ZID, StartDatum, EndDatum)
       Begleiter = []
       if (self.check_box_1.checked):
         vorname, nachname = self.check_box_1.text.split(" ")
@@ -73,11 +69,17 @@ class Startseite(StartseiteTemplate):
       if (self.check_box_3.checked):
         vorname, nachname = self.check_box_3.text.split(" ")
         Begleiter.append(anvil.server.call("get_gid", vorname, nachname))
-      print(Begleiter)
-      for x in Begleiter:
-        anvil.server.call("set_buchmit_for_jugendherberge", BID, x)
-  
-      open_form('Gebucht')
+      if (len(Begleiter) <= anvil.server.call("getBettenanzahl", ZID)):
+        anvil.server.call("set_bucht_for_jugendherberge", 10, ZID, StartDatum, EndDatum)
+        anvil.server.call('update_zimmer', ZID)
+        # Befüllen der Tabelle buchtmit mit den Daten
+        BID = anvil.server.call("get_bid", ZID, StartDatum, EndDatum)
+        for x in Begleiter:
+          anvil.server.call("set_buchmit_for_jugendherberge", BID, x)
+    
+        open_form('Gebucht')
+      else:
+        alert("Bettenanzahl beachten", title="Error", large=True)
 
   def CheckInputs(self):
     if (self.drop_down_2.selected_value == None):

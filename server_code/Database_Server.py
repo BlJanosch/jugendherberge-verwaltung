@@ -110,4 +110,12 @@ def get_start_end_datum(zid):
     conn.close()
     return res
 
+@anvil.server.callable
+def getBettenanzahl(zid):
+    conn = sqlite3.connect(data_files['jugendherbergen_verwaltung.db'])
+    cursor = conn.cursor()
+    res = cursor.execute(f"SELECT bettenanzahl FROM zimmer WHERE ZID={zid}").fetchone()
+    conn.close()
+    return res[0]
+
 
