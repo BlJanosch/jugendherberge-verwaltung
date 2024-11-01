@@ -42,7 +42,7 @@ def get_gast_for_jugendherberge(rows="*"):
 def set_buchmit_for_jugendherberge(bid, gid):
     conn = sqlite3.connect(data_files['jugendherbergen_verwaltung.db'])
     cursor = conn.cursor()
-    cursor.execute(f"INSERT INTO buchtmit (BID, GID) VALUES ({bid}, {gid})")
+    cursor.execute("INSERT INTO buchtmit (BID, GID) VALUES (?,?)", (bid, gid))
     conn.commit()
     conn.close()
 
@@ -50,7 +50,7 @@ def set_buchmit_for_jugendherberge(bid, gid):
 def set_bucht_for_jugendherberge(gid, zid, startdatum, enddatum):
     conn = sqlite3.connect(data_files['jugendherbergen_verwaltung.db'])
     cursor = conn.cursor()
-    cursor.execute(f"INSERT INTO bucht (GID, ZID, StartDatum, EndDatum) VALUES ({gid}, {zid}, '{startdatum}', '{enddatum}')")
+    cursor.execute("INSERT INTO bucht (GID, ZID, StartDatum, EndDatum) VALUES (?, ?, ?, ?)", (gid, zid, startdatum, enddatum))
     conn.commit()
     conn.close()
 
@@ -82,7 +82,7 @@ def get_gid(vorname, nachname):
 def update_zimmer(zid):
     conn = sqlite3.connect(data_files['jugendherbergen_verwaltung.db'])
     cursor = conn.cursor()
-    cursor.execute(f"UPDATE zimmer SET gebucht=1 WHERE ZID={zid}")
+    cursor.execute("UPDATE zimmer SET gebucht=1 WHERE ZID = ?", (zid,))
     conn.commit()
     conn.close()
 
