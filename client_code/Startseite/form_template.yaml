@@ -23,7 +23,7 @@ components:
     type: DataGrid
   - layout_properties: {grid_position: 'VFAXLM,JMJWHM'}
     name: label_2
-    properties: {bold: true, text: 'Zimmer auswählen:'}
+    properties: {bold: true, icon: 'fa:check', text: 'Zimmer auswählen:'}
     type: Label
   - layout_properties: {grid_position: 'ZGRIAU,XPCWZL'}
     name: drop_down_2
@@ -31,7 +31,7 @@ components:
     type: DropDown
   - layout_properties: {grid_position: 'GHDWBM,MBZHFB'}
     name: label_3
-    properties: {bold: true, italic: false, text: Zusätzliche Gäste}
+    properties: {bold: true, icon: 'fa:user-plus', italic: false, text: Zusätzliche Gäste}
     type: Label
   - event_bindings: {change: check_box_1_change}
     layout_properties: {grid_position: 'SUFLKQ,JNYAXD'}
@@ -48,7 +48,7 @@ components:
     type: CheckBox
   - layout_properties: {grid_position: 'HZBDGR,MDIJKX'}
     name: label_4
-    properties: {bold: true, text: 'Start:'}
+    properties: {bold: true, icon: 'fa:calendar', text: 'Anreisedatum:'}
     type: Label
   - data_bindings: []
     layout_properties: {grid_position: 'MATAQP,YAVXOW'}
@@ -57,7 +57,7 @@ components:
     type: DatePicker
   - layout_properties: {grid_position: 'ZLFKYN,TYGNHI'}
     name: label_5
-    properties: {bold: true, text: 'Ende:'}
+    properties: {bold: true, icon: 'fa:calendar', text: 'Abreisedatum:'}
     type: Label
   - layout_properties: {grid_position: 'OIIINT,BXAARC'}
     name: date_picker_2
@@ -78,7 +78,7 @@ components:
   type: FlowPanel
 - layout_properties: {slot: title}
   name: label_1
-  properties: {bold: true, text: Startseite Jugendherbgerge}
+  properties: {bold: true, icon: 'fa:home', text: Startseite Jugendherbgerge}
   type: Label
 container:
   properties: {html: '@theme:standard-page.html'}
