@@ -51,17 +51,20 @@ components:
     properties: {bold: true, icon: 'fa:calendar', text: 'Anreisedatum:'}
     type: Label
   - data_bindings: []
+    event_bindings: {change: date_picker_1_change}
     layout_properties: {grid_position: 'MATAQP,YAVXOW'}
     name: date_picker_1
-    properties: {}
+    properties: {format: '%d.%m.%Y'}
     type: DatePicker
   - layout_properties: {grid_position: 'ZLFKYN,TYGNHI'}
     name: label_5
     properties: {bold: true, icon: 'fa:calendar', text: 'Abreisedatum:'}
     type: Label
-  - layout_properties: {grid_position: 'OIIINT,BXAARC'}
+  - data_bindings: []
+    event_bindings: {change: date_picker_2_change}
+    layout_properties: {grid_position: 'OIIINT,BXAARC'}
     name: date_picker_2
-    properties: {}
+    properties: {date: null, format: '%d.%m.%Y', pick_time: false}
     type: DatePicker
   - event_bindings: {click: button_1_click}
     layout_properties: {full_width_row: false, grid_position: 'DFIMHD,TOQOFT', row_background: ''}

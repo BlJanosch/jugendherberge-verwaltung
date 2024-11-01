@@ -1,4 +1,5 @@
 from ._anvil_designer import StartseiteTemplate
+from datetime import timedelta
 from anvil import *
 import anvil.tables as tables
 import anvil.tables.query as q
@@ -54,53 +55,47 @@ class Startseite(StartseiteTemplate):
       # Befüllen der Tabelle bucht mit den Daten
       ZimmerNummer = self.drop_down_2.selected_value
       ZID = anvil.server.call("get_zimmerid", ZimmerNummer)
-      if (self.CheckDates()):
-        OldStartDatum = str(self.date_picker_1.date)
-        StartDatum = OldStartDatum.replace("-", ".")
-        OldEndDatum = str(self.date_picker_2.date)
-        EndDatum = OldEndDatum.replace("-", ".")
-        Begleiter = []
-        if (self.check_box_1.checked):
-          vorname, nachname = self.check_box_1.text.split(" ")
-          Begleiter.append(anvil.server.call("get_gid", vorname, nachname))
-        if (self.check_box_2.checked):
-          vorname, nachname = self.check_box_2.text.split(" ")
-          Begleiter.append(anvil.server.call("get_gid", vorname, nachname))
-        if (self.check_box_3.checked):
-          vorname, nachname = self.check_box_3.text.split(" ")
-          Begleiter.append(anvil.server.call("get_gid", vorname, nachname))
-        if (len(Begleiter) <= anvil.server.call("getBettenanzahl", ZID)):
-          anvil.server.call("set_bucht_for_jugendherberge", 10, ZID, StartDatum, EndDatum)
-          anvil.server.call('update_zimmer', ZID)
-          # Befüllen der Tabelle buchtmit mit den Daten
-          BID = anvil.server.call("get_bid", ZID, StartDatum, EndDatum)
-          for x in Begleiter:
-            anvil.server.call("set_buchmit_for_jugendherberge", BID, x)
-      
-          open_form('Gebucht')
-        else:
-          alert("Bettenanzahl beachten", title="Error", large=True)
+      OldStartDatum = str(self.date_picker_1.date)
+      StartDatum = OldStartDatum.replace("-", ".")
+      OldEndDatum = str(self.date_picker_2.date)
+      EndDatum = OldEndDatum.replace("-", ".")
+      Begleiter = []
+      if (self.check_box_1.checked):
+        vorname, nachname = self.check_box_1.text.split(" ")
+        Begleiter.append(anvil.server.call("get_gid", vorname, nachname))
+      if (self.check_box_2.checked):
+        vorname, nachname = self.check_box_2.text.split(" ")
+        Begleiter.append(anvil.server.call("get_gid", vorname, nachname))
+      if (self.check_box_3.checked):
+        vorname, nachname = self.check_box_3.text.split(" ")
+        Begleiter.append(anvil.server.call("get_gid", vorname, nachname))
+      if (len(Begleiter) <= anvil.server.call("getBettenanzahl", ZID)):
+        anvil.server.call("set_bucht_for_jugendherberge", 10, ZID, StartDatum, EndDatum)
+        anvil.server.call('update_zimmer', ZID)
+        # Befüllen der Tabelle buchtmit mit den Daten
+        BID = anvil.server.call("get_bid", ZID, StartDatum, EndDatum)
+        for x in Begleiter:
+          anvil.server.call("set_buchmit_for_jugendherberge", BID, x)
+    
+        open_form('Gebucht')
+      else:
+        alert("Bettenanzahl beachten", title="Error", large=True)
 
   def CheckInputs(self):
     if (self.drop_down_2.selected_value == None):
       alert("Bitte ein Zimmer auswählen", title="Error", large=True)
       return False
     if (self.date_picker_1.date == None):
-      alert("Bitte ein Startdatum auswählen", title="Error", large=True)
+      alert("Bitte ein Anreisedatum auswählen", title="Error", large=True)
       return False 
     if (self.date_picker_2.date == None):
-      alert("Bitte ein Enddatum auswählen", title="Error", large=True)
+      alert("Bitte ein Abreisedatum auswählen", title="Error", large=True)
       return False
     return True
 
-  def CheckDates(self):
-    if (self.date_picker_1.date == self.date_picker_2.date):
-      alert("Start- und Enddatum dürfen nicht identisch sein", title="Error", large=True)
-      return False
-    if (self.date_picker_1.date > self.date_picker_2.date):
-      alert("Startdatum darf nicht nach dem Enddatum sein", title="Error", large=True)
-      return False
-    return True
+  def date_picker_1_change(self, **event_args):
+    self.date_picker_2.min_date = self.date_picker_1.date + timedelta(days=1)
+
     
 
     
